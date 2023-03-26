@@ -1,11 +1,19 @@
 body {
     font-family: Arial, sans-serif;
+    background-image: url('/PT4/img/9fa61fda4aecf90ae01fcaad9f2b4e23.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
     margin: 0;
     padding: 0;
   }
   
   header {
-    background-color: #333;
+    background-image: url('/PT4/img/2d91fbf9a5a2b758b9ab8760b60b1ff1.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -22,6 +30,11 @@ body {
   }
   
   section {
+    background-image: url('/PT4/img/2d91fbf9a5a2b758b9ab8760b60b1ff1.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #fff;
     margin: 50px 0;
     padding: 20px;
     border: 1px solid #ccc;
