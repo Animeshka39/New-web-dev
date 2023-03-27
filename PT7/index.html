@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery UI Drop-Down Menu Example</title>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<style>
+		/* Style for the drop-down menu */
+		.ui-menu {
+			width: 150px;
+			font-size: 12px;
+		}
+		.ui-menu-item {
+			margin: 0;
+			padding: 0;
+			height: 20px;
+			line-height: 20px;
+		}
+		.ui-menu-item a {
+			display: block;
+			padding: 0 5px;
+			text-decoration: none;
+			color: #333;
+		}
+		.ui-menu-item a:hover {
+			background-color: #EFEFEF;
+		}
+	</style>
+</head>
+<body>
+	<!-- Example drop-down menu -->
+	<div id="menu">
+		<button id="dropdown">Menu</button>
+		<ul id="dropdown-menu">
+			<li><a href="#">Item 1</a></li>
+			<li><a href="#">Item 2</a></li>
+			<li><a href="#">Item 3</a></li>
+		</ul>
+	</div>
+
+	<!-- JavaScript code to initialize the drop-down menu -->
+	<script>
+		$(function() {
+			$("#dropdown").click(function() {
+				$("#dropdown-menu").toggle();
+			});
+			$(document).click(function(event) {
+				if (!$(event.target).closest("#menu").length) {
+					$("#dropdown-menu").hide();
+				}
+			});
+		});
+	</script>
+</body>
+</html>
