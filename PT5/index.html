@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>API Resources and Capabilities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>API Resources and Capabilities</h1>
+    </header>
+    
+    <main>
+      <section>
+        <h2>Maps</h2>
+        <div id="map"></div>
+    <script>
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([32.060260, 49.428542]),
+                zoom: 12
+            })
+        });
+        
+        var marker = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.fromLonLat([32.060260, 49.428542]))
+        });
+        
+        var markerStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1],
+                src: 'https://openlayers.org/en/v4.6.5/examples/data/icon.png'
+            })
+        });
+        
+        marker.setStyle(markerStyle);
+        
+        var vectorLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [marker]
+            })
+        });
+        
+        map.addLayer(vectorLayer);
+        
+        var layerSwitcher = new ol.control.LayerSwitcher({
+            tipLabel: 'Layers'
+        });
+        map.addControl(layerSwitcher);
+        
+        var geolocation = new ol.Geolocation({
+            tracking: true,
+            projection: map.getView().getProjection()
+        });
+        
+        geolocation.once('change:position', function() {
+            var pos = geolocation.getPosition();
+            var marker = new ol.Feature({
+                geometry: new ol.geom.Point(pos)
+            });
+            marker.setStyle(markerStyle);
+            vectorLayer.getSource().addFeature(marker);
+            map.getView().setCenter(pos);
+        });
+        
+        var routeLayer = new ol.layer.Vector({
+            source: new ol.source.Vector()
+        });
+        map.addLayer(routeLayer);
+        
+        var lineString = new ol.geom.LineString([
+            ol.proj.fromLonLat([32.060260, 49.428542]),
+            ol.proj.fromLonLat([32.055414, 49.424210])
+        ]);
+        lineString.transform('EPSG:4326', map.getView().getProjection());
+        var routeFeature = new ol.Feature({
+            geometry: lineString,
+            name: 'Route'
+        });
+        routeLayer.getSource().addFeature(routeFeature);
+        
+        var routeStyle = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: 'red',
+                width: 5
+            })
+        });
+        routeFeature.setStyle(routeStyle);
+        
+        var backgroundLayer = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+                url: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png'
+            })
+        });
+        map.getLayers().insertAt(0, backgroundLayer);
+    </script>
+      </section>
+      
+      <section>
+        <h2>Audio</h2>
+        <audio src="/PT5/resources/Metallica - Master Of Puppets.mp3" controls></audio>
+      </section>
+      
+      <section>
+        <h2>Video</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/1rkgN_Isf3o" frameborder="0" allowfullscreen></iframe>
+      </section>
+      
+      <section>
+        <h2>Widgets</h2>
+        <div id="time-widget"></div>
+
+<script>
+    function updateTime() {
+        var currentTime = new Date();
+        var hours = currentTime.getHours();
+        var minutes = currentTime.getMinutes();
+        var seconds = currentTime.getSeconds();
+        var meridiem = "AM";
+        if (hours > 12) {
+            hours = hours - 12;
+            meridiem = "PM";
+        }
+        if (hours === 0) {
+            hours = 12;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        var timeString = hours + ":" + minutes + ":" + seconds + " " + meridiem;
+        document.getElementById("time-widget").innerHTML = timeString;
+    }
+
+    updateTime();
+    setInterval(updateTime, 1000);
+</script>
+
+    </main>
+    
+    <footer>
+      <p>Copyright &copy; 2023</p>
+    </footer>
+  </body>
+</html>
